@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styling.css" />
+    <title>Compound Interest Calculator</title>
+</head>
+<body>
+    <div class="container">
+		
+      	<h2 id="main-heading">Compound Interest Calculator</h2>
+		<div class="main">
+				
+			<form action="" method="">
+				<div class="rows">
+					<label for="principal">What is the principal?</label>
+					<input id="principal" placeholder="Starting amount" type="text">
+				</div>
+				<div class="rows">
+					<label for="deposits">What is the monthly deposit?</label>
+					<input id="deposits" placeholder="Monthly deposit" type="text">
+				</div>
+				<div class="rows">
+					<label for="years">How many years will interest be compounded?</label>
+					<input id="years" placeholder="Number of years" type="text">
+				</div>
+				<div class="rows">
+					<label for="cycles">How many cycles per year will Interest be compounded?</label>
+					<input id="cycles" placeholder="Compound cycles/frequency per year" type="text">
+				</div>
+				<div class="rows">
+					<label for="interest-rate">What is the interest rate?</label>
+					<input id="interest-rate" placeholder="Interest rate %" type="text">
+				</div>
+			<br>
+			<br>
+			<br>
+			<br>
+				<div class="buttons">
+					<div>
+						<button type="submit" id="button" >Calculate</button>
+					</div>
+					<div>
+						<button type="submit" id="clear" >Clear</button>
+					</div>
+				</div>
+			<br>
+			<br>
+				<div class="final" id="append"></div>	
+			</form>
+		</div>
+		
+	</div>
+	<footer>
+		<p>&copy; Adrian Stoian 2021<br>
+		<a href="https://junocollege.com/">Created at Juno College</a></p>
+	</footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $("#button").click(function(event){
+                    event.preventDefault();
+                    let $principal = parseInt($("#principal").val());
+					let $deposits = parseInt($("#deposits").val());
+                    let $years = parseInt($("#years").val());
+                    let $cycles = parseInt($("#cycles").val());
+                    let $interest_rate = parseFloat(($("#interest-rate").val())/100);
+                    let $total = (parseFloat($principal * (Math.pow((1 + $interest_rate/$cycles), ($cycles) * ($years)))) + parseFloat($deposits * ((Math.pow((1 + $interest_rate/$cycles), ($cycles) * ($years)) - 1) / ($interest_rate/$cycles)) * (1 + $interest_rate/$cycles))).toFixed(2);
+                    $("<div>").append($total).appendTo('.final');
+					if ($total > 1000000) {
+						$('.final').text(`In ${$years} years you will have $${$total} - Congratulations! You are a millionaire!`);
+					} else if (($total > 500000) && ($total < 1000000)) {
+						$('.final').text(`In ${$years} years you will have $${$total} - Congratulations! You can only afford a den in Toronto!`);
+					} else {
+						$('.final').text(`In ${$years} years you will have $${$total} - Congratulations! You need to play lottery if you want to buy any realestate in Toronto!`)
+					};	
+                });
+			
+            
+            $("#clear").click(function(event){
+                    event.preventDefault();
+                    $("#append").empty();
+            });
+            
+            });
+    </script>
+</body>
+</html>
